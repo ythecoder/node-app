@@ -7,10 +7,14 @@ export const getUsers = async (query) => {
  return User.find().skip(skip).limit(limit);
 };
 
+// Updates an existing user by their ID with the provided 
+// data and returns the updated user document
 export const editUser = async (id, data) => {
   return User.findByIdAndUpdate(id, data, { new: true });
 };
 
+// Deletes a user by their ID and returns 
+// the deleted user document
 export const deleteUser = async (id) => {
   return User.findByIdAndDelete(id);
 };
