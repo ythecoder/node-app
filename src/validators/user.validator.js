@@ -4,3 +4,11 @@ export const createUserValidator = [
  body('email').isEmail(),
  body('age').optional().isInt({ min: 1 })
 ];
+
+export const editUserValidator = [
+  body('name').optional().notEmpty(),
+  body('email').optional().isEmail(),
+  body('age').optional().isInt({ min: 1 })
+];
+
+export const deleteUserValidator = [];

@@ -1,12 +1,14 @@
 import express from 'express';
 import * as userController from '../controllers/user.controller.js';
 import { createUserValidator } from '../validators/user.validator.js';
+import { editUserValidator, deleteUserValidator } from '../validators/user.validator.js';
 
 const router = express.Router();
 
 /**
  * @swagger
  * /api/v1/users:
+ * 
  *   post:
  *     summary: Create a new user
  *     tags: [Users]
@@ -91,5 +93,56 @@ router.post('/', createUserValidator, userController.createUser);
  *         description: Internal server error
  */
 router.get('/', userController.getUsers);
+
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *   put:
+ *     summary: Edit an existing user
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               age:
+ *                 type: number
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ */
+router.put('/:id', editUserValidator, userController.editUser);
+
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *   delete:
+ *     summary: Delete a user
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     responses:
+ *       204:
+ *         description: User deleted successfully
+ */
+router.delete('/:id', deleteUserValidator, userController.deleteUser);
 
 export default router;

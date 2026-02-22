@@ -3,7 +3,7 @@ import app from './app.js';
 import connectDB from './config/db.js'; // your DB connection file
 
 
-dotenv.config(); // load .env variables
+dotenv.config(); // load .env variables+
 
 
 
@@ -14,3 +14,5 @@ connectDB().then(() => {
 }).catch(err => {
   console.error('Failed to connect to DB. Server not started.', err);
 });
+
+
