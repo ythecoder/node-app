@@ -1,0 +1,84 @@
+Creating a React App using Vite
+
+Step 1: Install Node.js
+
+Make sure Node.js is installed.
+
+node -v
+npm -v
+
+If not installed, download from: https://nodejs.org
+
+Step 2: Create a New React App using Vite
+
+
+
+Run the following command:
+
+npm create vite@latest
+
+It will ask:
+
+Project name → frontend
+
+Select a framework → React
+
+Select a variant → JavaScript (or TypeScript if needed)
+
+Step 3: Move into Project Folder
+cd frontend
+
+Step 4: Install Dependencies
+npm install
+
+Step 5: Start Development Server
+npm run dev
+
+You will see output like:
+
+Local: http://localhost:5173/
+
+Open it in your browser 
+
+Optional Useful Commands
+🔹 Build for Production
+npm run build
+🔹 Preview Production Build
+npm run preview
+
+If Using Yarn Instead of npm
+yarn create vite
+cd my-react-app
+yarn
+yarn dev
+
+Summary of Main Commands
+npm create vite@latest
+cd my-react-app
+npm install
+npm run dev
+
+
+Route Basics:
+Step 1 — Install React Router
+
+Inside your frontend folder run:
+
+npm install react-router-dom
+
+Step 2 — Project Structure
+
+Create this folder structure inside src:
+
+src
+│
+├── pages
+│   ├── Home.tsx
+│   ├── About.tsx
+│   └── Contact.tsx
+│
+├── App.tsx
+└── main.tsx
+
+Install packages for types:
+npm install -D @types/react @types/react-dom
