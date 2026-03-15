@@ -1,21 +1,6 @@
 import { useState, useEffect } from "react";
+import type { User, UserPayload } from "../models/User";
 import "./Home.css";
-
-// Define types
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  age?: number;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-interface UserPayload {
-  name: string;
-  email: string;
-  age?: number;
-}
 
 const API_BASE = "http://localhost:5000/api/v1/users";
 
