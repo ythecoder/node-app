@@ -1,95 +1,255 @@
-import { useState } from "react";
-import type { User } from "../models/User";
+import { useState, useEffect } from "react";
 import "./Home.css";
+
+// Define types
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  age?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface UserPayload {
+  name: string;
+  email: string;
+  age?: number;
+}
+
+const API_BASE = "http://localhost:5000/api/v1/users";
 
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [editId, setEditId] = useState<number | null>(null);
+  const [age, setAge] = useState("");
+  const [editId, setEditId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // CREATE + UPDATE
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async (): Promise<void> => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API_BASE}?page=1&limit=50`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      setUsers(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load users");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    if (!trimmedName || !trimmedEmail) return;
 
-    if (editId !== null) {
-      setUsers(
-        users.map((u) =>
-          u.id === editId ? { ...u, name, email } : u
-        )
-      );
-      setEditId(null);
-    } else {
-      const newUser: User = {
-        id: Date.now(),
-        name,
-        email,
+    setLoading(true);
+    setError(null);
+
+    try {
+      const payload: UserPayload = {
+        name: trimmedName,
+        email: trimmedEmail,
       };
 
-      setUsers([...users, newUser]);
+      if (age.trim()) {
+        const ageNum = Number(age.trim());
+        if (!Number.isNaN(ageNum)) payload.age = ageNum;
+      }
+
+      const res = await fetch(editId ? `${API_BASE}/${editId}` : API_BASE, {
+        method: editId ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || `Server error: ${res.status}`);
+      }
+
+      setName("");
+      setEmail("");
+      setAge("");
+      setEditId(null);
+      await fetchUsers();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Operation failed");
+    } finally {
+      setLoading(false);
     }
-
-    setName("");
-    setEmail("");
   };
 
-  // DELETE
-  const deleteUser = (id: number) => {
-    setUsers(users.filter((u) => u.id !== id));
+  const handleDelete = async (id: string): Promise<void> => {
+    if (!window.confirm("Delete this user?")) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      await fetchUsers();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete user");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // EDIT
-  const editUser = (user: User) => {
+  const handleEdit = (user: User): void => {
     setName(user.name);
     setEmail(user.email);
-    setEditId(user.id);
+    setAge(user.age?.toString() ?? "");
+    setEditId(user._id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="container">
-      <h2 className="title">User Management</h2>
+    <div className="home-container">
+      <section className="hero-section">
+        <h2>Academic Directory</h2>
+        <p>Seamlessly manage faculty, staff, and student records with our unified management system.</p>
+      </section>
 
-      <form className="form" onSubmit={handleSubmit}>
-        <input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <button type="submit">
-          {editId ? "Update" : "Add"}
-        </button>
-      </form>
-
-      {users.map((user) => (
-        <div className="user" key={user.id}>
-          <span>
-            {user.name} — {user.email}
-          </span>
-
-          <div className="actions">
-            <button
-              className="edit"
-              onClick={() => editUser(user)}
-            >
-              Edit
-            </button>
-
-            <button
-              className="delete"
-              onClick={() => deleteUser(user.id)}
-            >
-              Delete
-            </button>
-          </div>
+      {error && (
+        <div className="status-toast error-toast">
+          <span className="toast-icon">⚠️</span>
+          <p>{error}</p>
         </div>
-      ))}
+      )}
+
+      <div className="management-card">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <div className="input-wrapper">
+              <label>Full Name</label>
+              <input
+                placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-wrapper">
+              <label>Email Address</label>
+              <input
+                type="email"
+                placeholder="john@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-wrapper age-input">
+              <label>Age (Optional)</label>
+              <input
+                type="number"
+                placeholder="25"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? (
+              <div className="spinner"></div>
+            ) : (
+              <>
+                <span>{editId ? "Update Record" : "Register Individual"}</span>
+                {editId ? "✨" : "+"}
+              </>
+            )}
+          </button>
+          
+          {editId && (
+            <button 
+              type="button" 
+              className="btn-icon" 
+              style={{ width: '100%', marginTop: '0.75rem' }}
+              onClick={() => {
+                setEditId(null);
+                setName("");
+                setEmail("");
+                setAge("");
+              }}
+            >
+              Cancel Update
+            </button>
+          )}
+        </form>
+      </div>
+
+      <section className="users-section">
+        <div className="section-header">
+          <h3>
+            Enrolled Individuals
+            <span className="badge">{users.length} Total Records</span>
+          </h3>
+        </div>
+
+        {loading && users.length === 0 ? (
+          <div className="loading-overlay">
+            <div className="spinner"></div>
+          </div>
+        ) : users.length === 0 ? (
+          <div className="empty-state">
+            <p>No user records found. Start by creating one!</p>
+          </div>
+        ) : (
+          <div className="user-grid">
+            {users.map((user) => (
+              <div className="user-card" key={user._id}>
+                <div className="card-header">
+                  <div className="avatar">
+                    {(user.name || "U")[0].toUpperCase()}
+                  </div>
+                  <div className="user-meta">
+                    <h4>{user.name}</h4>
+                    <p>{user.email}</p>
+                  </div>
+                </div>
+
+                <div className="card-details">
+                  <div className="detail-item">
+                    <label>Role</label>
+                    <span>Member</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Age</label>
+                    <span>{user.age ?? "N/A"}</span>
+                  </div>
+                </div>
+
+                <div className="card-actions">
+                  <button
+                    className="btn-icon btn-edit-icon"
+                    onClick={() => handleEdit(user)}
+                    disabled={loading}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn-icon btn-delete-icon"
+                    onClick={() => handleDelete(user._id)}
+                    disabled={loading}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
-}
+}

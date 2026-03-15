@@ -1,9 +1,8 @@
 import dotenv from 'dotenv';
+dotenv.config(); // load .env variables
+
 import app from './app.js';
 import connectDB from './config/db.js'; // your DB connection file
-
-
-dotenv.config(); // load .env variables+
 
 
 

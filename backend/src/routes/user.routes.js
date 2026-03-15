@@ -1,14 +1,14 @@
 import express from 'express';
 import * as userController from '../controllers/user.controller.js';
-import { createUserValidator } from '../validators/user.validator.js';
-import { editUserValidator, deleteUserValidator } from '../validators/user.validator.js';
+import { createUserValidator, editUserValidator, deleteUserValidator } from '../validators/user.validator.js';
+import { validate } from '../middlewares/validate.middleware.js';
 
 const router = express.Router();
 
 /**
  * @swagger
  * /api/v1/users:
- * 
+ *
  *   post:
  *     summary: Create a new user
  *     tags: [Users]
@@ -19,7 +19,7 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             required:
- *               - username
+ *               - name
  *               - email
  *             properties:
  *               name:
@@ -29,13 +29,15 @@ const router = express.Router();
  *                 type: string
  *                 example: john@example.com
  *               age:
- *                 type: string
+ *                 type: integer
  *                 example: 25
  *     responses:
  *       201:
  *         description: User created successfully
+ *       400:
+ *         description: Validation error
  */
-router.post('/', createUserValidator, userController.createUser);
+router.post('/', createUserValidator, validate, userController.createUser);
 
 /**
  * @swagger
@@ -123,8 +125,10 @@ router.get('/', userController.getUsers);
  *     responses:
  *       200:
  *         description: User updated successfully
+ *       400:
+ *         description: Validation error
  */
-router.put('/:id', editUserValidator, userController.editUser);
+router.put('/:id', editUserValidator, validate, userController.editUser);
 
 /**
  * @swagger
