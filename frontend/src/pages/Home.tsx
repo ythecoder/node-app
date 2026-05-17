@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import type { User, UserPayload } from "../models/User";
 import "./Home.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_BASE = "http://localhost:5000/api/v1/users";
 
@@ -16,6 +18,8 @@ export default function Home() {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  
 
   const fetchUsers = async (): Promise<void> => {
     setLoading(true);
@@ -68,6 +72,7 @@ export default function Home() {
       setAge("");
       setEditId(null);
       await fetchUsers();
+      toast.success("User added/updated successfully!");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Operation failed");
     } finally {
@@ -237,4 +242,4 @@ export default function Home() {
       </section>
     </div>
   );
-}
+}

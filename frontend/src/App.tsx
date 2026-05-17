@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -9,13 +11,21 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
+                {/* GLOBAL TOAST CONTAINER */}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+          theme="colored"
+        />
+
         <header className="navbar">
           <div className="nav-container">
             <div className="nav-brand">
-              <div className="brand-icon">
-                <span className="brand-dot"></span>
-                <span className="brand-pulse"></span>
-              </div>
+              <div className="brand-icon">🎓</div>
               <div className="brand-text">
                 College <span>Management</span>
               </div>

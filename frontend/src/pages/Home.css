@@ -19,7 +19,7 @@
 .hero-section h2 {
   font-size: 3rem;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  background: linear-gradient(135deg, #1e293b 0%, #64748b 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -67,7 +67,7 @@
 }
 
 .input-wrapper input {
-  background: rgba(15, 23, 42, 0.4);
+  background: rgba(248, 250, 252, 0.8);
   border: 1px solid var(--surface-border);
   border-radius: 12px;
   padding: 0.8rem 1rem;
@@ -79,8 +79,8 @@
 .input-wrapper input:focus {
   outline: none;
   border-color: var(--primary);
-  background: rgba(15, 23, 42, 0.6);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
 }
 
 .submit-btn {
@@ -231,7 +231,7 @@
   padding: 0.6rem;
   border-radius: 10px;
   border: 1px solid var(--surface-border);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(248, 250, 252, 0.5);
   color: var(--text-primary);
   font-weight: 500;
   font-size: 0.85rem;
@@ -244,7 +244,7 @@
 }
 
 .btn-icon:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(248, 250, 252, 0.8);
 }
 
 .btn-edit-icon:hover {
