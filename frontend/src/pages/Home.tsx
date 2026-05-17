@@ -8,9 +8,10 @@ const API_BASE = "http://localhost:5000/api/v1/users";
 
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [age, setAge] = useState("");
+  const [password, setPassword] = useState("");
   const [editId, setEditId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,10 +26,14 @@ export default function Home() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API_BASE}?page=1&limit=50`);
+      const res = await fetch(`${API_BASE}?page=1&limit=50`, {
+        headers: {
+          'x-tenant-id': 'default-tenant'
+        }
+      });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      setUsers(Array.isArray(data) ? data : []);
+      setUsers(Array.isArray(data.users) ? data.users : (Array.isArray(data) ? data : []));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load users");
     } finally {
@@ -38,27 +43,28 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const trimmedName = name.trim();
+    const trimmedFirst = firstName.trim();
+    const trimmedLast = lastName.trim();
     const trimmedEmail = email.trim();
-    if (!trimmedName || !trimmedEmail) return;
+    if (!trimmedFirst || !trimmedLast || !trimmedEmail) return;
 
     setLoading(true);
     setError(null);
 
     try {
       const payload: UserPayload = {
-        name: trimmedName,
+        firstName: trimmedFirst,
+        lastName: trimmedLast,
         email: trimmedEmail,
+        password: password || 'defaultPass123!',
       };
-
-      if (age.trim()) {
-        const ageNum = Number(age.trim());
-        if (!Number.isNaN(ageNum)) payload.age = ageNum;
-      }
 
       const res = await fetch(editId ? `${API_BASE}/${editId}` : API_BASE, {
         method: editId ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "x-tenant-id": "default-tenant"
+        },
         body: JSON.stringify(payload),
       });
 
@@ -67,9 +73,10 @@ export default function Home() {
         throw new Error(errData.message || `Server error: ${res.status}`);
       }
 
-      setName("");
+      setFirstName("");
+      setLastName("");
       setEmail("");
-      setAge("");
+      setPassword("");
       setEditId(null);
       await fetchUsers();
       toast.success("User added/updated successfully!");
@@ -84,7 +91,10 @@ export default function Home() {
     if (!window.confirm("Delete this user?")) return;
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
+      const res = await fetch(`${API_BASE}/${id}`, { 
+        method: "DELETE",
+        headers: { 'x-tenant-id': 'default-tenant' }
+      });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       await fetchUsers();
     } catch (err) {
@@ -95,9 +105,10 @@ export default function Home() {
   };
 
   const handleEdit = (user: User): void => {
-    setName(user.name);
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
     setEmail(user.email);
-    setAge(user.age?.toString() ?? "");
+    setPassword("");
     setEditId(user._id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -120,11 +131,20 @@ export default function Home() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <div className="input-wrapper">
-              <label>Full Name</label>
+              <label>First Name</label>
               <input
-                placeholder="John Doe"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                placeholder="John"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-wrapper">
+              <label>Last Name</label>
+              <input
+                placeholder="Doe"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 required
               />
             </div>
@@ -138,15 +158,18 @@ export default function Home() {
                 required
               />
             </div>
-            <div className="input-wrapper age-input">
-              <label>Age (Optional)</label>
-              <input
-                type="number"
-                placeholder="25"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-              />
-            </div>
+            {!editId && (
+              <div className="input-wrapper">
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="******"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required={!editId}
+                />
+              </div>
+            )}
           </div>
 
           <button type="submit" className="submit-btn" disabled={loading}>
@@ -167,9 +190,10 @@ export default function Home() {
               style={{ width: '100%', marginTop: '0.75rem' }}
               onClick={() => {
                 setEditId(null);
-                setName("");
+                setFirstName("");
+                setLastName("");
                 setEmail("");
-                setAge("");
+                setPassword("");
               }}
             >
               Cancel Update
@@ -200,10 +224,10 @@ export default function Home() {
               <div className="user-card" key={user._id}>
                 <div className="card-header">
                   <div className="avatar">
-                    {(user.name || "U")[0].toUpperCase()}
+                    {(user.firstName || "U")[0].toUpperCase()}
                   </div>
                   <div className="user-meta">
-                    <h4>{user.name}</h4>
+                    <h4>{user.firstName} {user.lastName}</h4>
                     <p>{user.email}</p>
                   </div>
                 </div>
@@ -211,11 +235,11 @@ export default function Home() {
                 <div className="card-details">
                   <div className="detail-item">
                     <label>Role</label>
-                    <span>Member</span>
+                    <span>{user.role?.name || 'Member'}</span>
                   </div>
                   <div className="detail-item">
-                    <label>Age</label>
-                    <span>{user.age ?? "N/A"}</span>
+                    <label>Status</label>
+                    <span>{user.isActive ? "Active" : "Inactive"}</span>
                   </div>
                 </div>
 
