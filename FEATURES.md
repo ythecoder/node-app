@@ -1,6 +1,6 @@
 # College Management System - Features Documentation
 
-## 📋 Table of Contents
+ Table of Contents
 
 1. [System Overview](#system-overview)
 2. [Core Features](#core-features)
@@ -12,29 +12,29 @@
 8. [Setup Instructions](#setup-instructions)
 9. [API Examples](#api-examples)
 
----
 
-## System Overview
 
-**College Management System** is a comprehensive **multi-tenant SaaS platform** for managing college/school operations. It provides role-based access control, student information management, staff management, admission workflows, and leave tracking.
+System Overview
 
-### Key Characteristics
+College Management System is a comprehensive multi-tenant SaaS platform for managing college/school operations. It provides role-based access control, student information management, staff management, admission workflows, and leave tracking.
 
-- **Multi-tenant Architecture**: Supports multiple schools/institutions with complete data isolation
-- **Enterprise-Grade Security**: JWT authentication, password hashing, activity logging
-- **Granular RBAC**: 8 roles with 20+ customizable permissions
-- **RESTful API**: Fully documented with Swagger/OpenAPI
-- **Scalable Design**: Indexed MongoDB queries, soft deletes, audit trails
+# Key Characteristics
 
----
+- Multi-tenant Architecture: Supports multiple schools/institutions with complete data isolation
+- Enterprise-Grade Security: JWT authentication, password hashing, activity logging
+- Granular RBAC: 8 roles with 20+ customizable permissions
+- RESTful API: Fully documented with Swagger/OpenAPI
+- Scalable Design: Indexed MongoDB queries, soft deletes, audit trails
 
-## Core Features
 
-### 1. **User & Role Management** 👥
+
+ Core Features
+
+# 1. User & Role Management 👥
 
 Complete user management with multi-role support and granular permissions.
 
-**Features:**
+Features:
 
 - User registration and login with JWT tokens
 - Role-based access control (RBAC)
@@ -45,183 +45,183 @@ Complete user management with multi-role support and granular permissions.
 - Profile management (avatar, contact info, address)
 - Password reset functionality
 
----
 
-### 2. **Student Information System (SIS)** 🎓
+
+# 2. Student Information System (SIS) 🎓
 
 Comprehensive student data management with rich profiles.
 
-**Features:**
+Features:
 
-- **Student Profiles**:
+- Student Profiles:
   - Personal info (name, DOB, gender, nationality, blood group)
   - Academic tracking (class, section, GPA, CGPA, total marks)
   - Medical records (history, allergies, emergency contacts)
   - Disciplinary records (incidents with severity levels)
-- **Document Management**:
+- Document Management:
   - Multi-version document storage (Aadhaar, Birth Certificate, etc.)
   - Automatic version tracking
   - Document upload with file URLs
-- **Family Management**:
+- Family Management:
   - Multiple parent/guardian linking
   - Relationship tracking
   - Primary contact designation
-- **Academic Progress**:
+- Academic Progress:
   - Class/section allocation
   - Promotion workflow (auto-update to next class)
   - Performance metrics (GPA, CGPA, total marks)
   - Previous class history
-- **Extracurricular Activities**:
+- Extracurricular Activities:
   - Activity tracking with achievements
   - Start/end dates
   - Activity descriptions
 
-- **Status Tracking**: Active, Inactive, Dropped, Graduated, Suspended
+- Status Tracking: Active, Inactive, Dropped, Graduated, Suspended
 
----
 
-### 3. **Online Admission System** 📝
+
+# 3. Online Admission System 📝
 
 Complete admission workflow from application to enrollment.
 
-**Features:**
+Features:
 
-- **Application Submission**:
+- Application Submission:
   - Self-service admission form
   - Personal and academic information
   - Parent/guardian details
   - Class preference
-- **Application Status Tracking**:
+- Application Status Tracking:
   - Submitted → Under Review → Interview Scheduled → Approved/Rejected/Waitlisted
-- **Document Management**:
+- Document Management:
   - Upload proof documents (Birth Certificate, Transfer Certificate, etc.)
   - Multiple file support
-- **Interview Scheduling**:
+- Interview Scheduling:
   - Schedule interview dates
   - Record interview results
-- **Approval Workflow**:
+- Approval Workflow:
   - Admin review and comments
   - Automatic enrollment number generation on approval
   - Rejection with reason documentation
-- **Communication**:
+- Communication:
   - Notification tracking
   - Last notification timestamp
 
----
 
-### 4. **Staff Management System** 👨‍🏫
+
+# 4. Staff Management System 👨‍🏫
 
 Complete HR management for teachers and administrative staff.
 
-**Features:**
+Features:
 
-- **Staff Profiles**:
+- Staff Profiles:
   - Employment information (designation, department, joining date)
   - Employment type (Permanent, Contractual, Part-time)
   - Current status (Active, On Leave, Inactive, Retired, Terminated)
-- **Qualifications & Experience**:
+- Qualifications & Experience:
   - Educational qualifications storage
   - Previous work experience tracking
   - Subject specializations
   - Class assignments (multiple classes possible)
   - Class teacher designation
-- **Salary Management**:
+- Salary Management:
   - Basic salary setup
   - Salary structure (Basic pay, Dearness, Allowances, Deductions)
   - Bank account details
   - Flexible allowances/deductions configuration
-- **Leave Management**:
+- Leave Management:
   - Leave balance tracking (Casual, Sick, Earned, Maternity, Paternity, Other)
   - Leave request submission
   - Approval workflow with balance verification
   - Automatic balance deduction on approval
   - Cancel leave with refund
-- **Performance Tracking**:
+- Performance Tracking:
   - Performance rating (1-5 scale)
   - Performance reviews with timestamps
   - Reviewer information stored
   - Research papers and awards tracking
 
----
 
-### 5. **Leave Management System** 🏖️
+
+# 5. Leave Management System 🏖️
 
 Comprehensive leave request and approval system.
 
-**Features:**
+Features:
 
-- **Leave Request**:
+- Leave Request:
   - Multiple leave types (Casual, Sick, Earned, Maternity, Paternity, Other)
   - Auto-calculation of number of days
   - Document upload support (medical certs for sick leave)
   - Request reason documentation
-- **Approval Workflow**:
+- Approval Workflow:
   - Pending → Approved/Rejected/Cancelled
   - Leave balance validation before approval
   - Automatic balance deduction
   - Comments/reasons documentation
-- **Balance Tracking**:
+- Balance Tracking:
   - Per-staff balance for each leave type
   - Auto-deduction on approval
   - Refund on cancellation
   - Configurable default balances
-- **Reporting**:
+- Reporting:
   - Filter by staff, status, month
   - Leave history tracking
 
----
 
-### 6. **Attendance Management** 📊
+
+# 6. Attendance Management 📊
 
 Student and staff attendance tracking.
 
-**Features:**
+Features:
 
-- **Multiple Marking Methods**:
+- Multiple Marking Methods:
   - Full-day attendance
   - Period-wise attendance (for detailed tracking)
   - Status options: Present, Absent, Leave, Late
-- **Approval Workflow**:
+- Approval Workflow:
   - Optional approval requirement
   - Remarks/notes per attendance
   - Marked by staff tracking
-- **Reporting**:
+- Reporting:
   - Filter by date, student/staff, class
   - Attendance reports generation
   - Individual and bulk attendance views
 
----
 
-### 7. **Class & Academic Management** 📚
+
+# 7. Class & Academic Management 📚
 
 Academic structure and organization.
 
-**Features:**
+Features:
 
-- **Class Setup**:
+- Class Setup:
   - Class number (1-12)
   - Section assignment
   - Room/building allocation
   - Capacity management
-- **Student Enrollment**:
+- Student Enrollment:
   - Multiple students per class
   - Current strength tracking
   - Total capacity
-- **Subject Assignment**:
+- Subject Assignment:
   - Multiple subjects per class
   - Subject code tracking
   - Teacher assignments
-- **Timetable Management**:
+- Timetable Management:
   - Period-wise scheduling
   - Start/end times
   - Teacher assignment per period
   - Day-wise timetables
 
----
 
-## Database Models
 
-### 1. **Tenant Model**
+ Database Models
+
+# 1. Tenant Model
 
 Multi-school/institution support.
 
@@ -242,7 +242,7 @@ Multi-school/institution support.
 - totalStaff: Number
 ```
 
-### 2. **Role Model**
+# 2. Role Model
 
 Role-based access control.
 
@@ -254,7 +254,7 @@ Role-based access control.
 - isActive: Boolean
 ```
 
-### 3. **User Model**
+# 3. User Model
 
 User authentication and profile.
 
@@ -281,7 +281,7 @@ User authentication and profile.
 - activityLog: [{ action, timestamp, ipAddress, userAgent }]
 ```
 
-### 4. **Student Model**
+# 4. Student Model
 
 Comprehensive student information.
 
@@ -311,7 +311,7 @@ Comprehensive student information.
 - isActive: Boolean
 ```
 
-### 5. **Parent Model**
+# 5. Parent Model
 
 Guardian/parent information.
 
@@ -330,7 +330,7 @@ Guardian/parent information.
 - isActive: Boolean
 ```
 
-### 6. **Staff Model**
+# 6. Staff Model
 
 Comprehensive staff/employee information.
 
@@ -359,7 +359,7 @@ Comprehensive staff/employee information.
 - isActive: Boolean
 ```
 
-### 7. **Class Model**
+# 7. Class Model
 
 Academic class/section information.
 
@@ -381,7 +381,7 @@ Academic class/section information.
 - isActive: Boolean
 ```
 
-### 8. **Admission Model**
+# 8. Admission Model
 
 Admission application tracking.
 
@@ -414,7 +414,7 @@ Admission application tracking.
 - rejectionReason: String
 ```
 
-### 9. **Leave Model**
+# 9. Leave Model
 
 Staff leave request tracking.
 
@@ -433,7 +433,7 @@ Staff leave request tracking.
 - approvalComments: String
 ```
 
-### 10. **Attendance Model**
+# 10. Attendance Model
 
 Student and staff attendance records.
 
@@ -451,18 +451,18 @@ Student and staff attendance records.
 - approvedBy: ObjectId (User reference)
 ```
 
----
 
-## Authentication & Authorization
 
-### Authentication Flow
+ Authentication & Authorization
 
-1. **User Registration** → Password hashed with bcrypt
-2. **User Login** → Credentials verified, JWT token generated
-3. **Token Usage** → Token sent in Authorization header for subsequent requests
-4. **Token Verification** → Middleware validates token, extracts userId and tenantId
+# Authentication Flow
 
-### JWT Token Structure
+1. User Registration → Password hashed with bcrypt
+2. User Login → Credentials verified, JWT token generated
+3. Token Usage → Token sent in Authorization header for subsequent requests
+4. Token Verification → Middleware validates token, extracts userId and tenantId
+
+# JWT Token Structure
 
 ```json
 {
@@ -473,7 +473,7 @@ Student and staff attendance records.
 }
 ```
 
-### Authorization Middleware
+# Authorization Middleware
 
 ```javascript
 // Single permission check
@@ -486,13 +486,13 @@ authorize(["students.create", "students.read"]);
 // SuperAdmin role bypasses all permission checks
 ```
 
----
 
-## API Endpoints
 
-### Authentication Endpoints
+ API Endpoints
 
-#### Register User
+# Authentication Endpoints
+
+ Register User
 
 ```
 POST /api/v1/auth/register
@@ -521,7 +521,7 @@ Response: 201 Created
 }
 ```
 
-#### Login
+ Login
 
 ```
 POST /api/v1/auth/login
@@ -548,7 +548,7 @@ Response: 200 OK
 }
 ```
 
-#### Get Current User
+ Get Current User
 
 ```
 GET /api/v1/auth/me
@@ -567,7 +567,7 @@ Response: 200 OK
 }
 ```
 
-#### Update Profile
+ Update Profile
 
 ```
 PUT /api/v1/auth/profile
@@ -584,7 +584,7 @@ Content-Type: application/json
 Response: 200 OK
 ```
 
-#### Change Password
+ Change Password
 
 ```
 POST /api/v1/auth/change-password
@@ -603,9 +603,9 @@ Response: 200 OK
 }
 ```
 
-### User Management Endpoints
+# User Management Endpoints
 
-#### Get All Users
+ Get All Users
 
 ```
 GET /api/v1/users?role=Teacher&status=active&search=john
@@ -623,7 +623,7 @@ Response: 200 OK
 }
 ```
 
-#### Create User
+ Create User
 
 ```
 POST /api/v1/users
@@ -644,9 +644,9 @@ Content-Type: application/json
 Response: 201 Created
 ```
 
-### Student Management Endpoints
+# Student Management Endpoints
 
-#### Create Student
+ Create Student
 
 ```
 POST /api/v1/students
@@ -687,7 +687,7 @@ Response: 201 Created
 }
 ```
 
-#### Get All Students
+ Get All Students
 
 ```
 GET /api/v1/students?classId=60d5ec49c1234567890abc4&enrollmentStatus=Active
@@ -701,7 +701,7 @@ Response: 200 OK
 }
 ```
 
-#### Add Parent to Student
+ Add Parent to Student
 
 ```
 POST /api/v1/students/{studentId}/parent
@@ -718,7 +718,7 @@ Content-Type: application/json
 Response: 200 OK
 ```
 
-#### Upload Student Document
+ Upload Student Document
 
 ```
 POST /api/v1/students/{studentId}/document
@@ -744,7 +744,7 @@ Response: 200 OK
 }
 ```
 
-#### Promote Student
+ Promote Student
 
 ```
 POST /api/v1/students/{studentId}/promote
@@ -765,9 +765,9 @@ Response: 200 OK
 }
 ```
 
-### Admission Endpoints
+# Admission Endpoints
 
-#### Submit Admission Application
+ Submit Admission Application
 
 ```
 POST /api/v1/students/apply
@@ -799,7 +799,7 @@ Response: 201 Created
 }
 ```
 
-#### Get All Admissions
+ Get All Admissions
 
 ```
 GET /api/v1/students?status=Pending&academicYear=2024-2025
@@ -813,7 +813,7 @@ Response: 200 OK
 }
 ```
 
-#### Update Admission Status
+ Update Admission Status
 
 ```
 PUT /api/v1/students/{admissionId}/status
@@ -837,7 +837,7 @@ Response: 200 OK
 }
 ```
 
-#### Schedule Interview
+ Schedule Interview
 
 ```
 POST /api/v1/students/{admissionId}/interview
@@ -856,9 +856,9 @@ Response: 200 OK
 }
 ```
 
-### Staff Management Endpoints
+# Staff Management Endpoints
 
-#### Create Staff
+ Create Staff
 
 ```
 POST /api/v1/staff
@@ -891,7 +891,7 @@ Response: 201 Created
 }
 ```
 
-#### Assign Class to Staff
+ Assign Class to Staff
 
 ```
 POST /api/v1/staff/{staffId}/class
@@ -911,7 +911,7 @@ Response: 200 OK
 }
 ```
 
-#### Update Salary Structure
+ Update Salary Structure
 
 ```
 PUT /api/v1/staff/{staffId}/salary
@@ -944,7 +944,7 @@ Response: 200 OK
 }
 ```
 
-#### Add Performance Review
+ Add Performance Review
 
 ```
 POST /api/v1/staff/{staffId}/review
@@ -963,9 +963,9 @@ Response: 200 OK
 }
 ```
 
-### Leave Management Endpoints
+# Leave Management Endpoints
 
-#### Request Leave
+ Request Leave
 
 ```
 POST /api/v1/staff
@@ -993,7 +993,7 @@ Response: 201 Created
 }
 ```
 
-#### Get Leave Balance
+ Get Leave Balance
 
 ```
 GET /api/v1/staff/{staffId}/leave-balance
@@ -1014,7 +1014,7 @@ Response: 200 OK
 }
 ```
 
-#### Approve Leave
+ Approve Leave
 
 ```
 POST /api/v1/staff/{leaveId}/approve
@@ -1036,7 +1036,7 @@ Response: 200 OK
 }
 ```
 
-#### Reject Leave
+ Reject Leave
 
 ```
 POST /api/v1/staff/{leaveId}/reject
@@ -1054,24 +1054,24 @@ Response: 200 OK
 }
 ```
 
----
 
-## User Roles & Permissions
 
-### 8 Core Roles
+ User Roles & Permissions
+
+# 8 Core Roles
 
 | Role            | Purpose                     | Permissions                                   |
-| --------------- | --------------------------- | --------------------------------------------- |
-| **SuperAdmin**  | SaaS platform administrator | All permissions                               |
-| **SchoolAdmin** | School administrator        | All school operations, tenant management      |
-| **Principal**   | School principal            | Staff, students, academic decisions           |
-| **Teacher**     | Classroom teacher           | Attendance, marks, class management           |
-| **Accountant**  | Finance staff               | Fees, payroll, financial reports              |
-| **Librarian**   | Library staff               | Library management, resource tracking         |
-| **Student**     | Student user                | View own profile, attendance, marks           |
-| **Parent**      | Guardian user               | View child's info, attendance, communications |
+|  |  |  |
+| SuperAdmin  | SaaS platform administrator | All permissions                               |
+| SchoolAdmin | School administrator        | All school operations, tenant management      |
+| Principal   | School principal            | Staff, students, academic decisions           |
+| Teacher     | Classroom teacher           | Attendance, marks, class management           |
+| Accountant  | Finance staff               | Fees, payroll, financial reports              |
+| Librarian   | Library staff               | Library management, resource tracking         |
+| Student     | Student user                | View own profile, attendance, marks           |
+| Parent      | Guardian user               | View child's info, attendance, communications |
 
-### 20+ Granular Permissions
+# 20+ Granular Permissions
 
 ```
 User Management:
@@ -1122,11 +1122,11 @@ Reports:
 - reports.view          View reports
 ```
 
----
 
-## Architecture
 
-### Multi-Tenant Design
+ Architecture
+
+# Multi-Tenant Design
 
 Every entity includes `tenantId` field for complete data isolation:
 
@@ -1135,16 +1135,16 @@ Every entity includes `tenantId` field for complete data isolation:
 const students = await Student.find({ tenantId, classId });
 ```
 
-### Security Layers
+# Security Layers
 
-1. **Authentication**: JWT tokens with 7-day expiry
-2. **Authorization**: Role-based permissions
-3. **Data Isolation**: Tenant-scoped queries
-4. **Password Security**: bcrypt hashing with salt rounds = 10
-5. **Account Protection**: 5-attempt lockout × 30 minutes
-6. **Audit Trail**: Activity logging for all users
+1. Authentication: JWT tokens with 7-day expiry
+2. Authorization: Role-based permissions
+3. Data Isolation: Tenant-scoped queries
+4. Password Security: bcrypt hashing with salt rounds = 10
+5. Account Protection: 5-attempt lockout × 30 minutes
+6. Audit Trail: Activity logging for all users
 
-### Database Indexes
+# Database Indexes
 
 Optimized queries with indexes on:
 
@@ -1154,7 +1154,7 @@ Optimized queries with indexes on:
 - `startDate + endDate` (Leave)
 - `date + tenantId` (Attendance)
 
-### Error Handling
+# Error Handling
 
 ```javascript
 // Standardized error responses
@@ -1164,26 +1164,26 @@ Optimized queries with indexes on:
 }
 ```
 
----
 
-## Setup Instructions
 
-### Prerequisites
+ Setup Instructions
+
+# Prerequisites
 
 - Node.js >= 14
 - MongoDB running locally or connection string
 - npm or yarn
 
-### Backend Setup
+# Backend Setup
 
-1. **Install Dependencies**
+1. Install Dependencies
 
 ```bash
 cd backend
 npm install
 ```
 
-2. **Create .env file**
+2. Create .env file
 
 ```bash
 MONGODB_URI=mongodb://localhost:27017/college_management
@@ -1193,36 +1193,36 @@ PORT=5000
 NODE_ENV=development
 ```
 
-3. **Start Server**
+3. Start Server
 
 ```bash
 npm run dev
 # Server runs at http://localhost:5000
 ```
 
-4. **Access Swagger Documentation**
+4. Access Swagger Documentation
 
 ```
 http://localhost:5000/swagger
 ```
 
-### Frontend Setup
+# Frontend Setup
 
-1. **Install Dependencies**
+1. Install Dependencies
 
 ```bash
 cd frontend
 npm install
 ```
 
-2. **Start Dev Server**
+2. Start Dev Server
 
 ```bash
 npm run dev
 # Frontend runs at http://localhost:5173 (Vite)
 ```
 
-### Database Seeding (Optional)
+# Database Seeding (Optional)
 
 To seed initial data with roles and tenants:
 
@@ -1242,13 +1242,13 @@ db.roles.insertMany([
 ])
 ```
 
----
 
-## API Examples
 
-### Example Flow: Complete Student Admission
+ API Examples
 
-#### Step 1: Submit Admission
+# Example Flow: Complete Student Admission
+
+ Step 1: Submit Admission
 
 ```bash
 curl -X POST http://localhost:5000/api/v1/students/apply \
@@ -1263,7 +1263,7 @@ curl -X POST http://localhost:5000/api/v1/students/apply \
   }'
 ```
 
-#### Step 2: Upload Documents
+ Step 2: Upload Documents
 
 ```bash
 curl -X POST http://localhost:5000/api/v1/students/<admissionId>/document \
@@ -1276,7 +1276,7 @@ curl -X POST http://localhost:5000/api/v1/students/<admissionId>/document \
   }'
 ```
 
-#### Step 3: Schedule Interview
+ Step 3: Schedule Interview
 
 ```bash
 curl -X POST http://localhost:5000/api/v1/students/<admissionId>/interview \
@@ -1288,7 +1288,7 @@ curl -X POST http://localhost:5000/api/v1/students/<admissionId>/interview \
   }'
 ```
 
-#### Step 4: Approve Application
+ Step 4: Approve Application
 
 ```bash
 curl -X PUT http://localhost:5000/api/v1/students/<admissionId>/status \
@@ -1301,9 +1301,9 @@ curl -X PUT http://localhost:5000/api/v1/students/<admissionId>/status \
   }'
 ```
 
-### Example Flow: Staff Leave Request
+# Example Flow: Staff Leave Request
 
-#### Step 1: Request Leave
+ Step 1: Request Leave
 
 ```bash
 curl -X POST http://localhost:5000/api/v1/staff \
@@ -1320,7 +1320,7 @@ curl -X POST http://localhost:5000/api/v1/staff \
   }'
 ```
 
-#### Step 2: Check Leave Balance
+ Step 2: Check Leave Balance
 
 ```bash
 curl -X GET http://localhost:5000/api/v1/staff/<staffId>/leave-balance \
@@ -1328,7 +1328,7 @@ curl -X GET http://localhost:5000/api/v1/staff/<staffId>/leave-balance \
   -H "X-Tenant-ID: <tenantId>"
 ```
 
-#### Step 3: Approve Leave
+ Step 3: Approve Leave
 
 ```bash
 curl -X POST http://localhost:5000/api/v1/staff/<leaveId>/approve \
@@ -1340,12 +1340,12 @@ curl -X POST http://localhost:5000/api/v1/staff/<leaveId>/approve \
   }'
 ```
 
----
 
-## Response Status Codes
+
+ Response Status Codes
 
 | Code | Meaning      | Usage                                |
-| ---- | ------------ | ------------------------------------ |
+| - |  |  |
 | 200  | OK           | Successful GET, PUT, DELETE          |
 | 201  | Created      | Successful POST (resource created)   |
 | 204  | No Content   | Successful DELETE (no response body) |
@@ -1356,11 +1356,11 @@ curl -X POST http://localhost:5000/api/v1/staff/<leaveId>/approve \
 | 409  | Conflict     | Resource already exists (duplicate)  |
 | 500  | Server Error | Internal server error                |
 
----
 
-## Key Validations
 
-### Password Requirements
+ Key Validations
+
+# Password Requirements
 
 - Minimum 8 characters
 - At least one uppercase letter
@@ -1370,24 +1370,24 @@ curl -X POST http://localhost:5000/api/v1/staff/<leaveId>/approve \
 
 Example: `SecurePass@123` ✅
 
-### Email Validation
+# Email Validation
 
 - Valid email format (RFC 5322)
 - Unique per tenant
 
-### Enrollment Number
+# Enrollment Number
 
 - Unique per tenant
 - Format: `STU-YYYY-XXX` or custom
 
-### Staff ID
+# Staff ID
 
 - Unique per tenant
 - Format: `STF-YYYY-XXX` or custom
 
----
 
-## Rate Limiting (Recommended for Production)
+
+ Rate Limiting (Recommended for Production)
 
 ```
 - 100 requests per minute per user
@@ -1395,22 +1395,22 @@ Example: `SecurePass@123` ✅
 - 10000 requests per minute per API key
 ```
 
----
 
-## Best Practices
 
-1. **Always include X-Tenant-ID header** in requests
-2. **Use Authorization Bearer token** from login
-3. **Handle token expiry** - refresh every 7 days
-4. **Validate on frontend** before API calls
-5. **Log all API errors** for debugging
-6. **Implement retry logic** for transient failures
-7. **Cache user permissions** in frontend
-8. **Use pagination** for large datasets
+ Best Practices
 
----
+1. Always include X-Tenant-ID header in requests
+2. Use Authorization Bearer token from login
+3. Handle token expiry - refresh every 7 days
+4. Validate on frontend before API calls
+5. Log all API errors for debugging
+6. Implement retry logic for transient failures
+7. Cache user permissions in frontend
+8. Use pagination for large datasets
 
-## Future Enhancements
+
+
+ Future Enhancements
 
 - [ ] Attendance report generation
 - [ ] Fee management and invoicing
@@ -1425,9 +1425,9 @@ Example: `SecurePass@123` ✅
 - [ ] Two-factor authentication
 - [ ] Document encryption
 
----
 
-## Support & Contact
+
+ Support & Contact
 
 For issues, feature requests, or documentation updates:
 
@@ -1435,8 +1435,8 @@ For issues, feature requests, or documentation updates:
 - Contact: admin@collegemanagement.com
 - Documentation: https://docs.collegemanagement.com
 
----
 
-**Last Updated**: May 17, 2026  
-**Version**: 1.0.0  
-**License**: MIT
+
+Last Updated: May 17, 2026  
+Version: 1.0.0  
+License: MIT

@@ -1,6 +1,8 @@
 import Student from '../models/student.model.js';
 import User from '../models/user.model.js';
 import Role from '../models/role.model.js';
+import '../models/class.model.js';
+import '../models/parent.model.js';
 import { hashPassword } from '../utils/password.utils.js';
 
 // Get all students
@@ -86,9 +88,14 @@ export const createStudent = async (req, res) => {
     }
 
     // Get student role
-    const studentRole = await Role.findOne({ name: 'Student', tenantId });
+    let studentRole = await Role.findOne({ name: 'Student', tenantId });
     if (!studentRole) {
-      return res.status(404).json({ message: 'Student role not found' });
+      studentRole = new Role({
+        name: 'Student',
+        tenantId,
+        permissions: ['students.read']
+      });
+      await studentRole.save();
     }
 
     // Create user first
@@ -187,6 +194,27 @@ export const updateStudent = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: 'Student update failed', error: error.message });
+  }
+};
+
+// Delete student
+export const deleteStudent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const tenantId = req.tenantId;
+
+    const student = await Student.findOneAndDelete({ _id: id, tenantId });
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    if (student.userId) {
+      await User.findByIdAndDelete(student.userId);
+    }
+
+    res.json({ message: 'Student deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Student deletion failed', error: error.message });
   }
 };
 
@@ -328,6 +356,7 @@ export default {
   getStudentById,
   createStudent,
   updateStudent,
+  deleteStudent,
   addParentToStudent,
   uploadDocument,
   promoteStudent,

@@ -15,7 +15,7 @@ export const register = async (req, res) => {
 
     if (!validatePassword(password)) {
       return res.status(400).json({
-        message: 'Password must be at least 8 characters with uppercase, lowercase, number, and special character',
+        message: 'Password must be at least 6 characters long',
       });
     }
 
@@ -209,7 +209,7 @@ export const changePassword = async (req, res) => {
 
     if (!validatePassword(newPassword)) {
       return res.status(400).json({
-        message: 'New password must be at least 8 characters with uppercase, lowercase, number, and special character',
+        message: 'New password must be at least 6 characters long',
       });
     }
 

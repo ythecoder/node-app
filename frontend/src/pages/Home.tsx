@@ -1,269 +1,96 @@
-import { useState, useEffect } from "react";
-import type { User, UserPayload } from "../models/User";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
-const API_BASE = "http://localhost:5000/api/v1/users";
+const MOCK_METRICS = [
+  { id: 1, title: "Total Students", value: "1,245", trend: "+12.5%", isPositive: true, icon: "🎓" },
+  { id: 2, title: "Active Staff", value: "84", trend: "+2.4%", isPositive: true, icon: "👨‍🏫" },
+  { id: 3, title: "Avg. Attendance", value: "92%", trend: "-1.1%", isPositive: false, icon: "📅" },
+  { id: 4, title: "Total Courses", value: "45", trend: "+5.0%", isPositive: true, icon: "📚" },
+];
+
+
+
+const RECENT_ACTIVITIES = [
+  { id: 1, action: "New student registration", user: "Emma Watson", time: "10 mins ago", type: "success" },
+  { id: 2, action: "Course material updated", user: "Dr. Smith", time: "1 hour ago", type: "info" },
+  { id: 3, action: "System maintenance", user: "Admin", time: "3 hours ago", type: "warning" },
+  { id: 4, action: "Leave request approved", user: "John Doe", time: "5 hours ago", type: "success" },
+];
 
 export default function Home() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [editId, setEditId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchUsers();
+    // Simulate data loading
+    const timer = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timer);
   }, []);
 
-  
-
-  const fetchUsers = async (): Promise<void> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`${API_BASE}?page=1&limit=50`, {
-        headers: {
-          'x-tenant-id': 'default-tenant'
-        }
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      setUsers(Array.isArray(data.users) ? data.users : (Array.isArray(data) ? data : []));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load users");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const trimmedFirst = firstName.trim();
-    const trimmedLast = lastName.trim();
-    const trimmedEmail = email.trim();
-    if (!trimmedFirst || !trimmedLast || !trimmedEmail) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const payload: UserPayload = {
-        firstName: trimmedFirst,
-        lastName: trimmedLast,
-        email: trimmedEmail,
-        password: password || 'defaultPass123!',
-      };
-
-      const res = await fetch(editId ? `${API_BASE}/${editId}` : API_BASE, {
-        method: editId ? "PUT" : "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "x-tenant-id": "default-tenant"
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.message || `Server error: ${res.status}`);
-      }
-
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPassword("");
-      setEditId(null);
-      await fetchUsers();
-      toast.success("User added/updated successfully!");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Operation failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async (id: string): Promise<void> => {
-    if (!window.confirm("Delete this user?")) return;
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_BASE}/${id}`, { 
-        method: "DELETE",
-        headers: { 'x-tenant-id': 'default-tenant' }
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      await fetchUsers();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete user");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleEdit = (user: User): void => {
-    setFirstName(user.firstName);
-    setLastName(user.lastName);
-    setEmail(user.email);
-    setPassword("");
-    setEditId(user._id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  if (loading) {
+    return (
+      <div className="analytics-loading">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="home-container">
-      <section className="hero-section">
-        <h2>Academic Directory</h2>
-        <p>Seamlessly manage faculty, staff, and student records with our unified management system.</p>
-      </section>
-
-      {error && (
-        <div className="status-toast error-toast">
-          <span className="toast-icon">⚠️</span>
-          <p>{error}</p>
+    <div className="analytics-dashboard">
+      <header className="dashboard-header">
+        <div>
+          <h2>Analytics Overview</h2>
+          <p>Welcome back! Here's what's happening today.</p>
         </div>
-      )}
+        <div className="header-actions">
+          <button className="primary-btn">Generate Report</button>
+        </div>
+      </header>
 
-      <div className="management-card">
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <div className="input-wrapper">
-              <label>First Name</label>
-              <input
-                placeholder="John"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />
+      <div className="metrics-grid">
+        {MOCK_METRICS.map(metric => (
+          <div className="metric-card" key={metric.id}>
+            <div className="metric-header">
+              <span className="metric-icon">{metric.icon}</span>
+              <span className={`metric-trend ${metric.isPositive ? 'positive' : 'negative'}`}>
+                {metric.isPositive ? '↑' : '↓'} {metric.trend}
+              </span>
             </div>
-            <div className="input-wrapper">
-              <label>Last Name</label>
-              <input
-                placeholder="Doe"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-              />
+            <div className="metric-content">
+              <h3>{metric.value}</h3>
+              <p>{metric.title}</p>
             </div>
-            <div className="input-wrapper">
-              <label>Email Address</label>
-              <input
-                type="email"
-                placeholder="john@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            {!editId && (
-              <div className="input-wrapper">
-                <label>Password</label>
-                <input
-                  type="password"
-                  placeholder="******"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required={!editId}
-                />
-              </div>
-            )}
           </div>
-
-          <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? (
-              <div className="spinner"></div>
-            ) : (
-              <>
-                <span>{editId ? "Update Record" : "Register Individual"}</span>
-                {editId ? "✨" : "+"}
-              </>
-            )}
-          </button>
-          
-          {editId && (
-            <button 
-              type="button" 
-              className="btn-icon" 
-              style={{ width: '100%', marginTop: '0.75rem' }}
-              onClick={() => {
-                setEditId(null);
-                setFirstName("");
-                setLastName("");
-                setEmail("");
-                setPassword("");
-              }}
-            >
-              Cancel Update
-            </button>
-          )}
-        </form>
+        ))}
       </div>
 
-      <section className="users-section">
-        <div className="section-header">
-          <h3>
-            Enrolled Individuals
-            <span className="badge">{users.length} Total Records</span>
-          </h3>
+      <div className="dashboard-content">
+        <div className="chart-section">
+          <h3>Enrollment Trends</h3>
+          <div className="mock-chart">
+            <div className="bar" style={{ height: '40%' }}><span>Jan</span></div>
+            <div className="bar" style={{ height: '60%' }}><span>Feb</span></div>
+            <div className="bar" style={{ height: '55%' }}><span>Mar</span></div>
+            <div className="bar" style={{ height: '80%' }}><span>Apr</span></div>
+            <div className="bar" style={{ height: '70%' }}><span>May</span></div>
+            <div className="bar" style={{ height: '95%' }}><span>Jun</span></div>
+          </div>
         </div>
 
-        {loading && users.length === 0 ? (
-          <div className="loading-overlay">
-            <div className="spinner"></div>
-          </div>
-        ) : users.length === 0 ? (
-          <div className="empty-state">
-            <p>No user records found. Start by creating one!</p>
-          </div>
-        ) : (
-          <div className="user-grid">
-            {users.map((user) => (
-              <div className="user-card" key={user._id}>
-                <div className="card-header">
-                  <div className="avatar">
-                    {(user.firstName || "U")[0].toUpperCase()}
-                  </div>
-                  <div className="user-meta">
-                    <h4>{user.firstName} {user.lastName}</h4>
-                    <p>{user.email}</p>
-                  </div>
-                </div>
-
-                <div className="card-details">
-                  <div className="detail-item">
-                    <label>Role</label>
-                    <span>{user.role?.name || 'Member'}</span>
-                  </div>
-                  <div className="detail-item">
-                    <label>Status</label>
-                    <span>{user.isActive ? "Active" : "Inactive"}</span>
-                  </div>
-                </div>
-
-                <div className="card-actions">
-                  <button
-                    className="btn-icon btn-edit-icon"
-                    onClick={() => handleEdit(user)}
-                    disabled={loading}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn-icon btn-delete-icon"
-                    onClick={() => handleDelete(user._id)}
-                    disabled={loading}
-                  >
-                    Delete
-                  </button>
+        <div className="recent-activity-section">
+          <h3>Recent Activity</h3>
+          <div className="activity-list">
+            {RECENT_ACTIVITIES.map(activity => (
+              <div className="activity-item" key={activity.id}>
+                <div className={`activity-indicator ${activity.type}`}></div>
+                <div className="activity-details">
+                  <p className="activity-action">{activity.action}</p>
+                  <p className="activity-meta">{activity.user} • {activity.time}</p>
                 </div>
               </div>
             ))}
           </div>
-        )}
-      </section>
+        </div>
+      </div>
     </div>
   );
 }

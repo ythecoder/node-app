@@ -96,6 +96,24 @@ router.put('/:id', auth, authorize(['students.update']), studentController.updat
 
 /**
  * @swagger
+ * /api/v1/students/{id}:
+ *   delete:
+ *     summary: Delete student
+ *     tags: [Students]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200: { description: Student deleted successfully }
+ */
+router.delete('/:id', auth, authorize(['students.delete']), studentController.deleteStudent);
+
+/**
+ * @swagger
  * /api/v1/students/{id}/promote:
  *   post:
  *     summary: Promote student to next class

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "./Auth.css";
 
 export default function Register() {
   const [firstName, setFirstName] = useState("");
@@ -8,7 +8,6 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +24,7 @@ export default function Register() {
 
       toast.success("Registration successful!");
       localStorage.setItem("token", data.token);
-      navigate("/");
+      window.location.href = "/";
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -34,12 +33,16 @@ export default function Register() {
   };
 
   return (
-    <div className="home-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-      <div className="management-card" style={{ maxWidth: '500px', width: '100%' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Create an Account</h2>
-        <form onSubmit={handleRegister}>
-          <div className="form-group">
-            <div className="input-wrapper">
+    <div className="auth-container">
+      <div className="auth-card" style={{ maxWidth: '500px' }}>
+        <div className="auth-header">
+          <h2>Create an Account</h2>
+          <p>Sign up to get started with our platform.</p>
+        </div>
+        
+        <form onSubmit={handleRegister} className="auth-form">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="auth-input-wrapper">
               <label>First Name</label>
               <input
                 type="text"
@@ -49,7 +52,8 @@ export default function Register() {
                 required
               />
             </div>
-            <div className="input-wrapper">
+            
+            <div className="auth-input-wrapper">
               <label>Last Name</label>
               <input
                 type="text"
@@ -59,31 +63,38 @@ export default function Register() {
                 required
               />
             </div>
-            <div className="input-wrapper">
-              <label>Email Address</label>
-              <input
-                type="email"
-                placeholder="john@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-wrapper">
-              <label>Password</label>
-              <input
-                type="password"
-                placeholder="******"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
           </div>
-          <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? <div className="spinner"></div> : <span>Register</span>}
+          
+          <div className="auth-input-wrapper">
+            <label>Email Address</label>
+            <input
+              type="email"
+              placeholder="john@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          
+          <div className="auth-input-wrapper">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          
+          <button type="submit" className="auth-submit-btn" disabled={loading} style={{ marginTop: '1rem' }}>
+            {loading ? <div className="auth-spinner"></div> : <span>Register Now</span>}
           </button>
         </form>
+        
+        <div className="auth-footer">
+          Already have an account? <a href="/login" className="auth-link">Sign in</a>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
-import Role from '../models/role.model.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const JWT_EXPIRE = process.env.JWT_EXPIRE || '7d';
@@ -62,7 +61,7 @@ export const authorize = (requiredPermissions = []) => {
         return next();
       }
 
-      const hasPermission = requiredPermissions.every((permission) =>
+      const hasPermission = role.permissions.includes('all') || requiredPermissions.every((permission) =>
         role.permissions.includes(permission)
       );
 

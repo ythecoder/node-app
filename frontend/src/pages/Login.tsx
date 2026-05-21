@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "./Auth.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +22,7 @@ export default function Login() {
 
       toast.success("Login successful!");
       localStorage.setItem("token", data.token);
-      navigate("/");
+      window.location.href = "/";
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -32,36 +31,51 @@ export default function Login() {
   };
 
   return (
-    <div className="home-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-      <div className="management-card" style={{ maxWidth: '400px', width: '100%' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Welcome Back</h2>
-        <form onSubmit={handleLogin}>
-          <div className="form-group">
-            <div className="input-wrapper">
-              <label>Email Address</label>
-              <input
-                type="email"
-                placeholder="john@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-wrapper">
-              <label>Password</label>
-              <input
-                type="password"
-                placeholder="******"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h2>Welcome Back</h2>
+          <p>Please enter your details to sign in.</p>
+        </div>
+        
+        <form onSubmit={handleLogin} className="auth-form">
+          <div className="auth-input-wrapper">
+            <label>Email Address</label>
+            <input
+              type="email"
+              placeholder="john@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
-          <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? <div className="spinner"></div> : <span>Login</span>}
+          
+          <div className="auth-input-wrapper">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          
+          <div className="auth-options">
+            <label className="auth-checkbox-label">
+              <input type="checkbox" style={{ accentColor: 'var(--primary)' }} /> Remember me
+            </label>
+            <a href="#" className="auth-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" className="auth-submit-btn" disabled={loading}>
+            {loading ? <div className="auth-spinner"></div> : <span>Sign In</span>}
           </button>
         </form>
+        
+        <div className="auth-footer">
+          Don't have an account? <a href="/register" className="auth-link">Sign up</a>
+        </div>
       </div>
     </div>
   );
