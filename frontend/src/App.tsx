@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BrowserRouter,
   Link,
@@ -18,6 +18,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import StaffPage from "./pages/Staff";
 import Students from "./pages/Students";
+import Experiments from "./pages/Experiments";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: "📊" },
@@ -25,6 +26,7 @@ const navItems = [
   { to: "/staff", label: "Staff", icon: "🏫" },
   { to: "/admissions", label: "Admissions", icon: "📝" },
   { to: "/leaves", label: "Leaves", icon: "🗓️" },
+  { to: "/experiments", label: "Experiments", icon: "🧪" },
 ];
 
 function AppLayout() {
@@ -177,6 +179,7 @@ function AppLayout() {
             <Route path="/leaves" element={<Leaves />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/experiments" element={<Experiments />} />
           </Routes>
         </main>
       </div>

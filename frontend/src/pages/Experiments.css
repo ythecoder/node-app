@@ -1,0 +1,218 @@
+/* Base Container */
+.experiments-container {
+  padding: 20px;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+/* Light Theme (Default) */
+.experiments-container.light-theme {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+/* Dark Theme */
+.experiments-container.dark-theme {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+/* Theme Toggle Section */
+.theme-toggle-section {
+  margin-bottom: 30px;
+  padding: 15px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.experiments-container.light-theme .theme-toggle-section {
+  background-color: #f5f5f5;
+  border: 2px solid #ddd;
+}
+
+.experiments-container.dark-theme .theme-toggle-section {
+  background-color: #2d2d2d;
+  border: 2px solid #444;
+}
+
+.theme-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+/* Toggle Button Styling */
+.theme-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 50px;
+  height: 28px;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 0;
+  position: relative;
+}
+
+.experiments-container.light-theme .theme-checkbox {
+  background-color: #ccc;
+}
+
+.experiments-container.dark-theme .theme-checkbox {
+  background-color: #555;
+}
+
+/* Toggle Button Checked State */
+.theme-checkbox:checked {
+  background-color: #667eea;
+}
+
+.experiments-container.dark-theme .theme-checkbox:checked {
+  background-color: #64b5f6;
+}
+
+/* Toggle Knob */
+.theme-checkbox::before {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  top: 2px;
+  left: 2px;
+  transition: left 0.3s ease;
+}
+
+.theme-checkbox:checked::before {
+  left: 24px;
+}
+
+.theme-checkbox:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.toggle-text {
+  font-size: 14px;
+}
+
+/* Experiment Section */
+.experiment-section {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.experiments-container.light-theme .experiment-section {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+}
+
+.experiments-container.dark-theme .experiment-section {
+  background-color: #2d2d2d;
+  border: 1px solid #444;
+}
+
+/* Titles */
+.experiment-title {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.experiments-container.light-theme .experiment-title {
+  color: #1a5490;
+}
+
+.experiments-container.dark-theme .experiment-title {
+  color: #64b5f6;
+}
+
+/* Input Styles */
+.experiment-input {
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 2px solid;
+  width: 100%;
+  max-width: 300px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.experiments-container.light-theme .experiment-input {
+  background-color: #ffffff;
+  color: #333333;
+  border-color: #ccc;
+}
+
+.experiments-container.light-theme .experiment-input:focus {
+  border-color: #1a5490;
+  outline: none;
+  box-shadow: 0 0 5px rgba(26, 84, 144, 0.3);
+}
+
+.experiments-container.dark-theme .experiment-input {
+  background-color: #3d3d3d;
+  color: #ffffff;
+  border-color: #555;
+}
+
+.experiments-container.dark-theme .experiment-input:focus {
+  border-color: #64b5f6;
+  outline: none;
+  box-shadow: 0 0 5px rgba(100, 181, 246, 0.3);
+}
+
+/* Display Text */
+.experiment-display {
+  margin-top: 15px;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.experiments-container.light-theme .experiment-display {
+  background-color: #e8f4f8;
+  color: #0d47a1;
+}
+
+.experiments-container.dark-theme .experiment-display {
+  background-color: #1a237e;
+  color: #90caf9;
+}
+
+/* Demo Text */
+.demo-text {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+/* Theme Demo Box */
+.theme-demo-box {
+  margin-top: 15px;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.experiments-container.light-theme .theme-demo-box {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border: 2px solid #667eea;
+}
+
+.experiments-container.dark-theme .theme-demo-box {
+  background: linear-gradient(135deg, #434343 0%, #000000 100%);
+  color: #64b5f6;
+  border: 2px solid #64b5f6;
+}
