@@ -41,17 +41,7 @@ export default function Experiments() {
           </p>
         </div>
 
-        {/* Experiment 2: Theme Changer Demo */}
-        <div className="experiment-section">
-          <h3 className="experiment-title">Theme Changer Demo</h3>
-          <p className="demo-text">
-            This page demonstrates a simple light/dark theme toggle. 
-            Use the checkbox at the top to switch between themes!
-          </p>
-          <div className="theme-demo-box">
-            <p>This is a demo box that changes with the theme</p>
-          </div>
-        </div>
+
       </div>
     </>
   );
