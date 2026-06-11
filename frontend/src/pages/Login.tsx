@@ -1,27 +1,36 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
+import { loginSchema } from "../validators/authSchemas";
+import type { LoginFormData } from "../validators/authSchemas";
 import "./Auth.css";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    mode: "onChange", // Show errors in real-time
+  });
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
     try {
       const res = await fetch("http://localhost:5000/api/v1/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(data),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Login failed");
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.message || "Login failed");
 
       toast.success("Login successful!");
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", result.token);
       window.location.href = "/";
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "An error occurred");
@@ -38,16 +47,15 @@ export default function Login() {
           <p>Please enter your details to sign in.</p>
         </div>
         
-        <form onSubmit={handleLogin} className="auth-form">
+        <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
           <div className="auth-input-wrapper">
             <label>Email Address</label>
             <input
               type="email"
               placeholder="john@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              {...register("email")}
             />
+            {errors.email && <span className="error-message">{errors.email.message}</span>}
           </div>
           
           <div className="auth-input-wrapper">
@@ -55,10 +63,9 @@ export default function Login() {
             <input
               type="password"
               placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              {...register("password")}
             />
+            {errors.password && <span className="error-message">{errors.password.message}</span>}
           </div>
           
           <div className="auth-options">

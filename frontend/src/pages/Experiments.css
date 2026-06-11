@@ -5,6 +5,8 @@
   transition: background-color 0.3s ease;
 }
 
+
+
 .experiments-container.light-theme {
   background-color: #fff;
   color: #000;
@@ -122,6 +124,231 @@
 .experiments-container.dark-theme .experiment-display {
   background-color: #1a237e;
   color: #fff;
+}
+
+/* Form Validation Styles */
+.experiment-description {
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.experiments-container.light-theme .experiment-description {
+  color: #666;
+}
+
+.experiments-container.dark-theme .experiment-description {
+  color: #ccc;
+}
+
+.validation-form {
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.validation-form label {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-input {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.experiments-container.light-theme .form-input {
+  background-color: #fff;
+  color: #000;
+}
+
+.experiments-container.dark-theme .form-input {
+  background-color: #555;
+  color: #fff;
+  border-color: #666;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+}
+
+.form-input.input-error {
+  border-color: #e74c3c;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: #27ae60;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.strength-label {
+  font-weight: 600;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  max-width: 200px;
+}
+
+.strength-bar.strength-none {
+  background-color: #ddd;
+}
+
+.strength-bar.strength-weak {
+  background-color: #e74c3c;
+}
+
+.strength-bar.strength-fair {
+  background-color: #f39c12;
+}
+
+.strength-bar.strength-good {
+  background-color: #f1c40f;
+}
+
+.strength-bar.strength-strong {
+  background-color: #27ae60;
+}
+
+.strength-text {
+  font-weight: 600;
+  min-width: 50px;
+}
+
+.strength-text.strength-weak {
+  color: #e74c3c;
+}
+
+.strength-text.strength-fair {
+  color: #f39c12;
+}
+
+.strength-text.strength-good {
+  color: #f1c40f;
+}
+
+.strength-text.strength-strong {
+  color: #27ae60;
+}
+
+/* Submit Button */
+.submit-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 400px;
+}
+
+.experiments-container.light-theme .submit-btn {
+  background-color: #667eea;
+  color: #fff;
+}
+
+.experiments-container.dark-theme .submit-btn {
+  background-color: #667eea;
+  color: #fff;
+}
+
+.submit-btn:hover {
+  background-color: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Success Alert */
+.success-alert {
+  margin-top: 15px;
+  padding: 12px;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.experiments-container.dark-theme .success-alert {
+  background-color: #1e5631;
+  color: #a8e6b8;
+  border-color: #2d7a4a;
+}
+
+/* Form Info Display */
+.form-info {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.experiments-container.light-theme .form-info {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+.experiments-container.dark-theme .form-info {
+  background-color: #3a3a3a;
+  border: 1px solid #555;
+}
+
+.form-info h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.form-info pre {
+  margin: 0;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  overflow-x: auto;
+}
+
+.experiments-container.light-theme .form-info pre {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ddd;
+}
+
+.experiments-container.dark-theme .form-info pre {
+  background-color: #2a2a2a;
+  color: #fff;
+  border: 1px solid #444;
 }
 
 
