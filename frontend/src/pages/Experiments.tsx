@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Header from "./Header";
 import { experimentSchema } from "../validators/authSchemas";
@@ -14,15 +14,19 @@ export default function Experiments() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm<ExperimentFormData>({
     resolver: zodResolver(experimentSchema),
     mode: "onChange", // Show errors in real-time as user types
   });
 
-  // Watch password for strength indicator
-  const password = watch("password", "");
+  // Watch password for strength indicator using useWatch
+  const password = useWatch({
+    control,
+    name: "password",
+    defaultValue: "",
+  });
 
   // Get Password Strength
   const getPasswordStrength = (password: string) => {
