@@ -85,6 +85,24 @@ router.put('/:id', auth, authorize(['staff.update']), staffController.updateStaf
 
 /**
  * @swagger
+ * /api/v1/staff/{id}:
+ *   delete:
+ *     summary: Delete staff
+ *     tags: [Staff]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200: { description: Staff deleted successfully }
+ */
+router.delete('/:id', auth, authorize(['staff.delete']), staffController.deleteStaff);
+
+/**
+ * @swagger
  * /api/v1/staff/{id}/class:
  *   post:
  *     summary: Assign class to staff

@@ -4,9 +4,8 @@ const roleSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      enum: ["SuperAdmin", "SchoolAdmin", "Principal", "Teacher", "Accountant", "Librarian", "Student", "Parent"],
+      enum: ["SuperAdmin", "SchoolAdmin", "Admin", "Principal", "Teacher", "Accountant", "Librarian", "Counselor", "Student", "Parent"],
       required: true,
-      unique: true,
     },
     description: String,
     permissions: [{
@@ -61,5 +60,8 @@ const roleSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+// Compound unique index on name and tenantId
+roleSchema.index({ name: 1, tenantId: 1 }, { unique: true });
 
 export default mongoose.model("Role", roleSchema);

@@ -351,4 +351,126 @@
   border: 1px solid #444;
 }
 
+/* Todo CRUD Styles */
+.todo-container {
+  max-width: 500px;
+}
+
+.todo-input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.experiments-container.light-theme .todo-input {
+  background-color: #fff;
+  color: #000;
+}
+
+.experiments-container.dark-theme .todo-input {
+  background-color: #555;
+  color: #fff;
+  border-color: #666;
+}
+
+.todo-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+}
+
+.todo-add-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #667eea;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.todo-add-btn:hover {
+  background-color: #5568d3;
+  transform: translateY(-2px);
+}
+
+.todo-error {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.todo-loading,
+.todo-empty {
+  color: #888;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.experiments-container.light-theme .todo-item {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+}
+
+.experiments-container.dark-theme .todo-item {
+  background-color: #4a4a4a;
+  border: 1px solid #555;
+}
+
+.todo-item:hover {
+  transform: translateX(4px);
+}
+
+.todo-text {
+  cursor: pointer;
+  flex: 1;
+  font-size: 15px;
+}
+
+.todo-completed .todo-text {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.todo-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.todo-delete-btn:hover {
+  background-color: rgba(231, 76, 60, 0.15);
+}
+
 

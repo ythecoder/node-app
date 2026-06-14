@@ -87,15 +87,44 @@ export const createStaff = async (req, res) => {
       return res.status(409).json({ message: 'Staff ID already exists' });
     }
 
-    // Get role based on designation
-    let roleName = designation === 'Principal' ? 'Principal' : 'Teacher';
-    if (['Accountant', 'Librarian', 'Counselor'].includes(designation)) {
-      roleName = designation;
+    // Check if email already exists
+    const existingUser = await User.findOne({ email, tenantId });
+    if (existingUser) {
+      return res.status(409).json({ message: 'A user with this email already exists' });
     }
 
-    const role = await Role.findOne({ name: roleName, tenantId });
+    // Get role based on designation
+    const designationRoleMap = {
+      'Principal': 'Principal',
+      'Vice Principal': 'Principal',
+      'Teacher': 'Teacher',
+      'Accountant': 'Accountant',
+      'Librarian': 'Librarian',
+      'Counselor': 'Counselor',
+      'Administrator': 'Admin',
+    };
+    const roleName = designationRoleMap[designation] || 'Teacher';
+
+    let role = await Role.findOne({ name: roleName, tenantId });
+
     if (!role) {
-      return res.status(404).json({ message: 'Role not found for this designation' });
+      const defaultPermissions = {
+        'Principal': ['staff.read', 'staff.create', 'staff.update', 'staff.delete', 'students.read', 'students.create', 'students.update', 'students.delete', 'class.manage', 'academic.manage', 'reports.generate'],
+        'Teacher': ['students.read', 'students.update', 'attendance.mark', 'attendance.read', 'class.view', 'leave.request', 'leave.view'],
+        'Accountant': ['staff.read', 'students.read', 'fees.collect', 'fees.view', 'fees.report', 'reports.view'],
+        'Librarian': ['students.read', 'staff.read', 'class.view'],
+        'Counselor': ['students.read', 'staff.read', 'leave.view', 'attendance.view'],
+        'Admin': ['all'],
+      };
+
+      role = new Role({
+        name: roleName,
+        permissions: defaultPermissions[roleName] || ['staff.read'],
+        tenantId,
+        isActive: true,
+      });
+
+      await role.save();
     }
 
     // Create user first
@@ -120,8 +149,8 @@ export const createStaff = async (req, res) => {
       tenantId,
       designation,
       department,
-      joiningDate: new Date(joiningDate),
-      employmentType,
+      joiningDate: joiningDate ? new Date(joiningDate) : new Date(),
+      employmentType: ['Permanent', 'Contractual', 'Part-time'].includes(employmentType) ? employmentType : 'Permanent',
       basicSalary,
       employmentStatus: 'Active',
     });
@@ -189,6 +218,27 @@ export const updateStaff = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: 'Staff update failed', error: error.message });
+  }
+};
+
+// Delete staff
+export const deleteStaff = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const tenantId = req.tenantId;
+
+    const staff = await Staff.findOneAndDelete({ _id: id, tenantId });
+    if (!staff) {
+      return res.status(404).json({ message: 'Staff not found' });
+    }
+
+    if (staff.userId) {
+      await User.findByIdAndDelete(staff.userId);
+    }
+
+    res.json({ message: 'Staff deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Staff deletion failed', error: error.message });
   }
 };
 
@@ -353,6 +403,7 @@ export default {
   getStaffById,
   createStaff,
   updateStaff,
+  deleteStaff,
   assignClass,
   addPerformanceReview,
   getLeaveBalance,
